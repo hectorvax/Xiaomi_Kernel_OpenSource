@@ -290,8 +290,8 @@ static int read_inline_xattr(struct inode *inode, struct page *ipage,
 			return PTR_ERR(page);
 
 		inline_addr = inline_xattr_addr(inode, page);
-	}
 	memcpy(txattr_addr, inline_addr, inline_size);
+	}
 	f2fs_put_page(page, 1);
 
 	return 0;
@@ -560,6 +560,7 @@ out:
 ssize_t f2fs_listxattr(struct dentry *dentry, char *buffer, size_t buffer_size)
 {
 	struct inode *inode = d_inode(dentry);
+	nid_t xnid = F2FS_I(inode)->i_xattr_nid;
 	struct f2fs_xattr_entry *entry;
 	void *base_addr, *last_base_addr;
 	int error = 0;
